@@ -3,6 +3,10 @@ class Cart < ActiveRecord::Base
   has_many :items, through: :line_items
   belongs_to :user
 
+  def status
+
+  end
+
   def total
     total = 0
     self.line_items.each do |li|

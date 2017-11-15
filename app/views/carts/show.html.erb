@@ -12,5 +12,5 @@
 
 <p>Order total: <strong><%= number_to_currency(@cart.total) %></strong> </p>
 
-<%= button_to 'Checkout', cart_path(@cart) %>
-If checkout has been clicked, checkout button should not appear.
+<%= button_to 'Checkout', checkout_path %>
+If checkout has been clicked, checkout button should not appear. Build if status='submitted' logic.
