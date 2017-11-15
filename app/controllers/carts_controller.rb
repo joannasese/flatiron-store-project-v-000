@@ -1,12 +1,13 @@
 class CartsController < ApplicationController
-  #testing git magic
+  before_action :user_signed_in?, only: [:show,:checkout]
 
   def show
     @cart = Cart.find(params[:id])
   end
 
   def checkout
-    @cart = Cart.find(params[:id])
-    redirect_to cart_path(@cart)
+    cart = Cart.find(params[:id])
+    cart.checkout
+    redirect_to cart_path(cart)
   end
 end
