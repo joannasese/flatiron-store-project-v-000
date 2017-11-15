@@ -12,4 +12,4 @@
 
 <p>Order total: <strong><%= number_to_currency(@cart.total) %></strong> </p>
 
-<%= button_to 'Checkout', checkout_path %>
+<%= button_to 'Checkout', cart_path(@cart) %>
