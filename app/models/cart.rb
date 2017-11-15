@@ -3,11 +3,11 @@ class Cart < ActiveRecord::Base
   has_many :items, through: :line_items
   belongs_to :user
 
-  def status
+ def status
 
-  end
+ end
 
-  def total
+ def total
     total = 0
     self.line_items.each do |li|
         total += li.item.price * li.quantity
@@ -15,7 +15,7 @@ class Cart < ActiveRecord::Base
     total
   end
 
-  def add_item(item_id)
+ def add_item(item_id)
     line_item = self.line_items.find_by(item_id: item_id)
     if line_item
       line_item.quantity += 1
@@ -24,4 +24,21 @@ class Cart < ActiveRecord::Base
     end
     line_item
   end
+
+ def checkout
+   self.status = "submitted"
+   self.clear_inventory
+   self.user.current_cart_id = nil
+   self.user.save
+   self.save
+ end
+
+def clear_inventory
+   if self.status == "submitted"
+     self.line_items.each do |line_item|
+       line_item.item.inventory -= line_item.quantity
+       line_item.item.save
+     end
+   end
+ end
 end

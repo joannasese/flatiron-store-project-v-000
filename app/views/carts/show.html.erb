@@ -5,12 +5,15 @@
 <% end %>
 
 <% @cart.line_items.each do |line_item| %>
-  <p><%= link_to line_item.item.title, item_path(line_item.item) %> | <%= number_to_currency(line_item.item.price) %> | Quantity: <%= line_item.quantity %> | <% if line_item.item.inventory < 5 %>
+  <p><%= link_to line_item.item.title , item_path(line_item.item) %> | <%= number_to_currency(line_item.item.price) %> | Quantity: <%= line_item.quantity %> |
+    <% if line_item.item.inventory < 5 %>
     <strong>There are only <%= line_item.item.inventory %> left in stock.</strong>
   <% end %> </p>
 <% end %>
 
-<p>Order total: <strong><%= number_to_currency(@cart.total) %></strong> </p>
 
-<%= button_to 'Checkout', checkout_path %>
-If checkout has been clicked, checkout button should not appear. Build if status='submitted' logic.
+<p>Order total: <strong><%= number_to_currency(@cart.total.to_f/100) %></strong> </p>
+
+<%  if @cart.status != 'submitted' %>
+  <%= button_to 'Checkout', checkout_path %>
+<% end %>
